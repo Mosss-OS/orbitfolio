@@ -2,8 +2,9 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import Map, { MapRef, Source, Layer, Marker } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-// Mapbox public token (free tier, publishable)
-const MAPBOX_TOKEN = "pk.eyJ1IjoibG92YWJsZS1kZW1vIiwiYSI6ImNseGd6cXo0NTBhejQycnB2ZDZyeXl4bGkifQ.demo";
+// You need a real Mapbox token. Get one free at https://account.mapbox.com/
+// This is a publishable client token, safe to include in frontend code.
+const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw";
 
 const PROTOCOL_MARKERS = [
   { name: "Uniswap", color: "#FF007A", lng: -74.006, lat: 40.7128, value: "$12.4K" },
