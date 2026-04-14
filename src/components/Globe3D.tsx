@@ -1,5 +1,5 @@
 import { useRef, useMemo, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Sphere, Line, Html } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -32,12 +32,17 @@ function generateConnections(points: THREE.Vector3[], maxDist: number) {
 }
 
 const PROTOCOL_NODES = [
-  { name: "Uniswap", color: "#FF007A", pos: [0.8, 1.2, 0.5] },
-  { name: "Aave", color: "#B6509E", pos: [-1.0, 0.8, -0.6] },
-  { name: "Lido", color: "#00A3FF", pos: [0.3, -1.0, 1.1] },
-  { name: "Compound", color: "#00D395", pos: [-0.7, -0.5, -1.2] },
-  { name: "Curve", color: "#FF6B6B", pos: [1.2, -0.3, -0.8] },
-  { name: "MakerDAO", color: "#1AAB9B", pos: [-1.1, 0.2, 0.9] },
+  { name: "Uniswap", color: "#FF007A", pos: [0.8, 1.2, 0.5] as [number, number, number] },
+  { name: "Aave", color: "#B6509E", pos: [-1.0, 0.8, -0.6] as [number, number, number] },
+  { name: "Lido", color: "#00A3FF", pos: [0.3, -1.0, 1.1] as [number, number, number] },
+  { name: "Compound", color: "#00D395", pos: [-0.7, -0.5, -1.2] as [number, number, number] },
+  { name: "Curve", color: "#FF6B6B", pos: [1.2, -0.3, -0.8] as [number, number, number] },
+  { name: "MakerDAO", color: "#1AAB9B", pos: [-1.1, 0.2, 0.9] as [number, number, number] },
+];
+
+// Generate connections between protocol nodes
+const PROTOCOL_CONNECTIONS: [number, number][] = [
+  [0, 1], [0, 2], [1, 3], [2, 4], [3, 5], [4, 5], [0, 4], [1, 5], [2, 3],
 ];
 
 function ProtocolNode({ position, color, name }: { position: [number, number, number]; color: string; name: string }) {
@@ -71,12 +76,46 @@ function ProtocolNode({ position, color, name }: { position: [number, number, nu
       </mesh>
       {hovered && (
         <Html position={position} center distanceFactor={5}>
-          <div className="bg-background/90 backdrop-blur-sm border border-border px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg">
+          <div className="bg-background border border-border px-3 py-1.5 rounded-lg whitespace-nowrap shadow-sm">
             <span className="text-xs font-medium text-foreground">{name}</span>
           </div>
         </Html>
       )}
     </group>
+  );
+}
+
+function ProtocolLines() {
+  return (
+    <>
+      {PROTOCOL_CONNECTIONS.map(([i, j], idx) => (
+        <Line
+          key={`proto-line-${idx}`}
+          points={[
+            new THREE.Vector3(...PROTOCOL_NODES[i].pos),
+            new THREE.Vector3(...PROTOCOL_NODES[j].pos),
+          ]}
+          color={PROTOCOL_NODES[i].color}
+          transparent
+          opacity={0.35}
+          lineWidth={1.5}
+        />
+      ))}
+      {/* Lines from center to each protocol node */}
+      {PROTOCOL_NODES.map((node, idx) => (
+        <Line
+          key={`center-line-${idx}`}
+          points={[
+            new THREE.Vector3(0, 0, 0),
+            new THREE.Vector3(...node.pos),
+          ]}
+          color="#7c5cbf"
+          transparent
+          opacity={0.2}
+          lineWidth={1}
+        />
+      ))}
+    </>
   );
 }
 
@@ -107,7 +146,7 @@ function GlobeWireframe() {
           emissive="#2d9d78"
           emissiveIntensity={0.03}
           transparent
-          opacity={0.2}
+          opacity={0.15}
         />
       </Sphere>
 
@@ -129,15 +168,19 @@ function GlobeWireframe() {
         />
       ))}
 
+      {/* Protocol nodes with connecting lines */}
+      <ProtocolLines />
+
       {PROTOCOL_NODES.map((node) => (
         <ProtocolNode
           key={node.name}
-          position={node.pos as [number, number, number]}
+          position={node.pos}
           color={node.color}
           name={node.name}
         />
       ))}
 
+      {/* Center node */}
       <mesh position={[0, 0, 0]}>
         <sphereGeometry args={[0.12, 16, 16]} />
         <meshStandardMaterial
@@ -151,32 +194,6 @@ function GlobeWireframe() {
         <meshBasicMaterial color="#7c5cbf" transparent opacity={0.3} side={THREE.DoubleSide} />
       </mesh>
     </group>
-  );
-}
-
-function Stars() {
-  const positions = useMemo(() => {
-    const pos = new Float32Array(1000 * 3);
-    for (let i = 0; i < 1000; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 50;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 50;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 50;
-    }
-    return pos;
-  }, []);
-
-  return (
-    <points>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={1000}
-          array={positions}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial size={0.03} color="#94a3b8" transparent opacity={0.3} sizeAttenuation />
-    </points>
   );
 }
 
@@ -207,7 +224,6 @@ export default function Globe3D() {
         <pointLight position={[5, 5, 5]} intensity={0.6} color="#2d9d78" />
         <pointLight position={[-5, -3, 3]} intensity={0.3} color="#7c5cbf" />
 
-        <Stars />
         <GlobeWireframe />
         <CameraController />
       </Canvas>

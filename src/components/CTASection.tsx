@@ -7,8 +7,6 @@ export default function CTASection() {
 
   return (
     <section ref={ref} className="relative py-24 md:py-32 bg-background overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
-
       <div className="container mx-auto px-4 md:px-8 text-center relative z-10">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -30,12 +28,12 @@ export default function CTASection() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2 }}
         >
-          <button className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:brightness-110 transition-all glow-primary">
+          <a href="/explore" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity">
             Explore the Graph
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12l5-5-5-5" />
             </svg>
-          </button>
+          </a>
         </motion.div>
       </div>
     </section>

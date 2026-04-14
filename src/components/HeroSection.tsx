@@ -5,7 +5,7 @@ const Globe3D = lazy(() => import("./Globe3D"));
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-surface-gradient pt-14">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background pt-14">
       {/* Globe background */}
       <div className="absolute inset-0 z-0">
         <Suspense fallback={<div className="w-full h-full bg-background" />}>
@@ -13,8 +13,8 @@ export default function HeroSection() {
         </Suspense>
       </div>
 
-      {/* Radial overlay for text readability */}
-      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-background/70 via-transparent to-background" />
+      {/* Simple overlay for text readability */}
+      <div className="absolute inset-0 z-[1] bg-background/60" />
 
       {/* Content */}
       <div className="relative z-[2] text-center px-4 max-w-3xl mx-auto">
@@ -35,7 +35,7 @@ export default function HeroSection() {
         >
           Your DeFi universe
           <br />
-          <span className="text-gradient-primary">— mapped in 3D</span>
+          <span className="text-primary">— mapped in 3D</span>
         </motion.h1>
 
         <motion.p
@@ -53,13 +53,13 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.7 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <a href="/explore" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:brightness-110 transition-all glow-primary">
+          <a href="/explore" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity">
             Explore the Graph
             <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" className="ml-1">
               <path d="M5 12l5-5-5-5" />
             </svg>
           </a>
-          <button className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-border text-foreground font-medium text-sm hover:border-primary/50 hover:bg-primary/5 transition-all">
+          <button className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-border text-foreground font-medium text-sm hover:border-foreground transition-colors">
             Connect Wallet
           </button>
         </motion.div>

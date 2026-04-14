@@ -75,7 +75,7 @@ export default function HowItWorks() {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.2 + i * 0.15, duration: 0.5 }}
-              className="bg-card-gradient border border-border rounded-xl p-8 hover:border-primary/30 transition-all group shadow-sm"
+              className="bg-card border border-border rounded-xl p-8 hover:border-primary transition-colors"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -95,7 +95,7 @@ export default function HowItWorks() {
               </p>
               <a
                 href={step.ctaLink}
-                className="inline-flex items-center text-sm font-medium text-primary hover:brightness-110 transition-all group-hover:gap-2 gap-1"
+                className="inline-flex items-center text-sm font-medium text-primary hover:opacity-80 transition-opacity gap-1"
               >
                 {step.cta}
                 <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
