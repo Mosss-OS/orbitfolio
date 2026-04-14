@@ -14,7 +14,7 @@ export default function StatsBar() {
   const inView = useInView(ref, { once: true });
 
   return (
-    <section ref={ref} className="relative z-10 border-y border-border bg-card/50 backdrop-blur-sm">
+    <section ref={ref} className="relative z-10 border-y border-border bg-background">
       <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-0">
         {stats.map((stat, i) => (
           <motion.div

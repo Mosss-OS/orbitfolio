@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/90 backdrop-blur-xl">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background">
       <div className="container mx-auto flex h-14 items-center justify-between px-4 md:px-8">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2">
-          <div className="h-7 w-7 rounded-full bg-primary/15 flex items-center justify-center">
-            <div className="h-3 w-3 rounded-full bg-primary" />
+          <div className="h-7 w-7 rounded-full bg-primary flex items-center justify-center">
+            <div className="h-3 w-3 rounded-full bg-primary-foreground" />
           </div>
           <span className="text-lg font-bold tracking-tight text-foreground">
             Orbitfolio
@@ -22,13 +21,13 @@ export default function Navbar() {
           <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             About
           </a>
-          <a href="/explore" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <a href="/explore" className="text-sm text-primary font-medium transition-colors">
             Explore
           </a>
         </div>
 
         {/* Connect Wallet */}
-        <button className="hidden md:flex items-center gap-2 text-sm font-medium text-foreground border border-border hover:border-primary/50 hover:bg-primary/5 transition-all px-4 py-2 rounded-lg">
+        <button className="hidden md:flex items-center gap-2 text-sm font-medium text-foreground border border-border hover:border-foreground transition-colors px-4 py-2 rounded-lg">
           Connect Wallet
         </button>
 
@@ -49,17 +48,13 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl px-4 py-4 space-y-3"
-        >
+        <div className="md:hidden border-t border-border bg-background px-4 py-4 space-y-3">
           <a href="#features" className="block text-sm text-muted-foreground">About</a>
-          <a href="/explore" className="block text-sm text-muted-foreground">Explore</a>
+          <a href="/explore" className="block text-sm text-primary font-medium">Explore</a>
           <button className="w-full text-sm font-medium text-foreground border border-border px-4 py-2 rounded-lg">
             Connect Wallet
           </button>
-        </motion.div>
+        </div>
       )}
     </nav>
   );

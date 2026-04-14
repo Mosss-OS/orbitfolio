@@ -20,7 +20,7 @@ export default function FeaturesSection() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="features" ref={ref} className="py-24 md:py-32 bg-surface-gradient">
+    <section id="features" ref={ref} className="py-24 md:py-32 bg-card">
       <div className="container mx-auto px-4 md:px-8">
         {/* Scrolling protocol ticker */}
         <div className="mb-20 overflow-hidden">
@@ -64,7 +64,7 @@ export default function FeaturesSection() {
               initial={{ opacity: 0, y: 25 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.3 + i * 0.1 }}
-              className="bg-background border border-border rounded-xl p-6 hover:border-primary/30 transition-colors shadow-sm"
+              className="bg-background border border-border rounded-xl p-6 hover:border-primary transition-colors"
             >
               <div className="text-2xl mb-4 text-primary">{f.icon}</div>
               <h3 className="text-sm font-semibold text-foreground mb-2">{f.title}</h3>
